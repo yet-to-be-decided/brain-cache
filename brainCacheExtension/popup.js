@@ -2,6 +2,7 @@ document.getElementById("confirmBtn").addEventListener("click", async () => {
   // Check if token already exists in storage
   chrome.storage.local.get("authToken", async (data) => {
     let token = data.authToken;
+    console.log(token);
 
     if (!token) {
       // No token, proceed with login and token retrieval
@@ -21,6 +22,10 @@ document.getElementById("confirmBtn").addEventListener("click", async () => {
       sendPageData(token);
     }
   });
+});
+
+document.getElementById("cancelBtn").addEventListener("click", () => {
+  window.close();
 });
 
 async function sendPageData(token) {
@@ -54,20 +59,38 @@ async function sendPageData(token) {
                 return;
               }
 
-              await fetch("http://localhost:3000/api/data", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  url: pageUrl,
-                  pageContent: pageBody,
-                  email: userInfo.email,
-                  screenshot: image, // Base64 encoded screenshot
-                }),
-              });
+              try {
+                const response = await fetch(
+                  "http://localhost:8080/api/extension/storedata",
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      url: pageUrl,
+                      pageContent: pageBody,
+                      email: userInfo.email,
+                      username: userInfo.name,
+                      screenshot: image, // Base64 encoded screenshot
+                    }),
+                  }
+                );
+
+                if (response.status === 201) {
+                  alert("Data sent successfully!");
+                  window.close();
+                } else {
+                  console.error(
+                    "Failed to send data. Status code:",
+                    response.status
+                  );
+                  alert("Failed to send data. Please try again.");
+                }
+              } catch (error) {
+                console.error("Error sending data:", error);
+                alert("An error occurred while sending data.");
+              }
             }
           );
-          alert("Data sent successfully!");
-          window.close();
         } else {
           console.error("Failed to retrieve page content");
         }
