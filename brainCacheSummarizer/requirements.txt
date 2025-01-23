@@ -1,0 +1,8 @@
+langchain 
+langchain-groq 
+langchain-community 
+tiktoken 
+langgraph 
+unstructured
+uvicorn
+fastapi
