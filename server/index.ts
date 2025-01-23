@@ -9,7 +9,7 @@ dotenv.config();
 app.use(
   cors({
     origin: [
-      "chrome-extension://hoohflakhgeopodfhmolbnbonaccfllj",
+      "chrome-extension://pmjbcolldgmnllngnljdnaogplellknc",
       "http://localhost:5000",
     ],
   })
