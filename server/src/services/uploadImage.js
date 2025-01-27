@@ -6,9 +6,9 @@ module.exports = async (base64Image) => {
     const base64Data = base64Image.split(",")[1];
     const binaryData = Buffer.from(base64Data, "base64");
 
-    const fileName = `image_${Date.now()}.png`;
+    const fileName = `uploads/image_${Date.now()}.png`;
     const { data, error } = await supabase.storage
-      .from("images")
+      .from("screenshots")
       .upload(fileName, binaryData, {
         contentType: "image/png",
         upsert: true,
@@ -22,7 +22,7 @@ module.exports = async (base64Image) => {
 
     // Return the public URL of the uploaded image
     const { data: publicUrlData } = supabase.storage
-      .from("images")
+      .from("screenshots")
       .getPublicUrl(fileName);
 
     return publicUrlData.publicUrl;

@@ -63,8 +63,6 @@ module.exports = async (body, url) => {
 
     // Clean up whitespace
     textContent = textContent.replace(/\s+/g, " ").trim();
-
-    console.log(textContent);
     return textContent;
   } catch (error) {
     console.error("Error parsing body:", error);
