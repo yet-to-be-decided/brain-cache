@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Brain Cache",
-  "version": "1.5",
-  "permissions": ["identity", "activeTab", "scripting", "storage"],
+  "version": "1.8",
+  "permissions": [
+    "identity",
+    "activeTab",
+    "scripting",
+    "storage",
+    "webNavigation"
+  ],
   "background": {
     "service_worker": "background.js"
   },
