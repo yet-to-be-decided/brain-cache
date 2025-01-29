@@ -27,14 +27,18 @@ async def summarize_text(input_data: TextInput):
         
         # Generate summary and notes
         summary = await summary_chain.generate_summary(cleaned_text)
-        notes = await summary_chain.generate_notes(summary, links, images)
+        notes = await summary_chain.generate_notes(cleaned_text, links, images)
+        title = await summary_chain.generate_title(cleaned_text)
+        tags = await summary_chain.generate_tags(cleaned_text)
+
+        print("Notes: ", notes)
         
         # Return the complete response
         return SummaryResponse(
             summary=summary,
             notes=notes,
-            extracted_links=links,
-            extracted_images=images
+            title=title,
+            tags=tags
         )
         
     except Exception as e:
