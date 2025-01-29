@@ -29,6 +29,7 @@ class SummaryChain:
     ("human", "Generate a single, concise title for the following content. "
               "Respond only with the title as a single string, without numbering or extra text.\n\nContent:\n{context}")
 ])
+        
         self.tags_prompt = PromptTemplate(
             template=(
                 "generate tags for the text given.\n{format_instructions}\n{context}\n"
@@ -37,9 +38,9 @@ class SummaryChain:
             partial_variables={"format_instructions": self.tags_parser.get_format_instructions()},
         )
 
-        
         self.notes_chain = self.notes_prompt | llm | self.notes_parser
         self.tags_chain = self.tags_prompt | llm | self.tags_parser
+
 
     async def generate_summary(self, text: str) -> str:
         """Generate a summary from the input text."""

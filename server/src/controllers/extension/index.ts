@@ -29,6 +29,7 @@ const storeData = async (req: any, res: any) => {
     }
 
     const parsedContent = await parseBody(pageContent, url);
+    console.log("Parsed content: ", parsedContent);
 
     const imageKey = await uploadImage(screenshot, url);
 
@@ -116,9 +117,9 @@ const storeData = async (req: any, res: any) => {
     for (const note of snap.notes) {
       const { error: noteError } = await supabase.from("note").insert({
         content: note.text,
-        related_images: note.related_images,
-        related_links: note.related_links,
-        related_codes: note.related_codes,
+        related_images: note.related_images || [],
+        related_links: note.related_links || [],
+        related_codes: note.related_codes || [],
         snap_id: newSnap.id,
       });
 

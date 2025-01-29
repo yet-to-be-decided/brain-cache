@@ -30,6 +30,8 @@ async def summarize_text(input_data: TextInput):
         notes = await summary_chain.generate_notes(cleaned_text, links, images)
         title = await summary_chain.generate_title(cleaned_text)
         tags = await summary_chain.generate_tags(cleaned_text)
+
+        print("Notes: ", notes)
         
         # Return the complete response
         return SummaryResponse(
